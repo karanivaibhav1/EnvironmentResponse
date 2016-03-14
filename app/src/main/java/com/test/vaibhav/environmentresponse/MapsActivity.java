@@ -1,13 +1,22 @@
 package com.test.vaibhav.environmentresponse;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -19,11 +28,19 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity
+        implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener
+{
 
     private GoogleMap mMap;
     private static final float DEFAULT_ZOOM = 10;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    Fragment currFragment;
+    Toolbar toolbar;
+    NavigationView nv;
+    DrawerLayout dl;
+    ActionBarDrawerToggle abdt;
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -87,7 +104,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
-                return;
             }
 
             // other 'case' lines to check for other
@@ -98,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_main);
         if (initMap() ) {
             Log.d("inside onCreate","value is "+(mMap!=null));
             Toast.makeText(this, "Ready to Map", Toast.LENGTH_SHORT).show();
@@ -113,6 +129,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         checkLocationPermission();
+
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        nv=(NavigationView)findViewById(R.id.navigation_view);
+        nv.setNavigationItemSelectedListener(this);
+
+        dl=(DrawerLayout)findViewById(R.id.drawer);
+
+        abdt=new ActionBarDrawerToggle(this,dl,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close){
+            @Override
+            public void onDrawerClosed(View drawerView){
+                super.onDrawerClosed(drawerView);
+            }
+            @Override
+            public void onDrawerOpened(View drawerView){
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        dl.setDrawerListener(abdt);
+        abdt.syncState();
     }
 
 
@@ -141,7 +181,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             SupportMapFragment mapFrag=(SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
             mMap=mapFrag.getMap();
         }
-        Log.d("inside init map","value is "+(mMap!=null));
+        Log.d("inside init map", "value is " + (mMap != null));
         return (mMap!=null);
     }
     @Override
@@ -163,5 +203,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.moveCamera(update);
         }
     }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        int id=item.getItemId();
+        switch(id)
+        {
+            case R.id.issue:
 
+                break;
+            case R.id.legal:
+                break;
+            case R.id.events:
+                break;
+            case R.id.settings:
+                break;
+            default:
+                break;
+        }
+        dl.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
