@@ -209,13 +209,28 @@ public class MapsActivity extends AppCompatActivity
         switch(id)
         {
             case R.id.issue:
-
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map,Fragment_Issues.newInstance(R.id.fragment_issues))
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.legal:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map,Fragment_Legal.newInstance(R.id.fragment_legal))
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.events:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map,Fragment_Events.newInstance(R.id.fragment_events))
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.settings:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map,Fragment_Settings.newInstance(R.id.fragment_settings))
+                        .addToBackStack(null)
+                        .commit();
                 break;
             default:
                 break;
