@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".MapsActivity">
+    <item
+        android:id="@+id/loon_trash"
+        android:title="Trash"
+        android:icon="@drawable/loon_trash"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_air"
+        android:title="Air"
+        android:icon="@drawable/loon_air"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_soil"
+        android:title="Soil"
+        android:icon="@drawable/loon_soil"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_plant"
+        android:title="Plant"
+        android:icon="@drawable/loon_plant"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_water"
+        android:title="Water"
+        android:icon="@drawable/loon_water"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_other"
+        android:title="Others"
+        android:icon="@drawable/loon_other"
+        app:showAsAction="always|collapseActionView"/>
+</menu>

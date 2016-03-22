@@ -41,6 +41,7 @@ public class MapsActivity extends AppCompatActivity
     NavigationView nv;
     DrawerLayout dl;
     ActionBarDrawerToggle abdt;
+    Toolbar balloonBar;
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -133,6 +134,10 @@ public class MapsActivity extends AppCompatActivity
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        balloonBar=(Toolbar) findViewById(R.id.balloon_bar);
+        balloonBar.inflateMenu(R.menu.balloonbar);
+        setUpToolBarItemSelected(savedInstanceState);
+
         nv=(NavigationView)findViewById(R.id.navigation_view);
         nv.setNavigationItemSelectedListener(this);
 
@@ -155,6 +160,39 @@ public class MapsActivity extends AppCompatActivity
         abdt.syncState();
     }
 
+    public void setUpToolBarItemSelected(final Bundle bundle){
+        balloonBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.loon_trash:
+                        return true;
+                    case R.id.loon_air:
+                        return true;
+                    case R.id.loon_soil:
+                        return true;
+                    case R.id.loon_plant:
+                        return true;
+                    case R.id.loon_water:
+                        return true;
+                    case R.id.loon_other:
+                        return true;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+        /*balloonBar.setNavigationIcon(R.drawable.balloon);
+        balloonBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                balloonBar.setVisibility(View.GONE);
+            }
+        });*/
+
+    }
 
     /**
      * Manipulates the map once available.
@@ -209,24 +247,28 @@ public class MapsActivity extends AppCompatActivity
         switch(id)
         {
             case R.id.issue:
+                balloonBar.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map,Fragment_Issues.newInstance(R.id.fragment_issues))
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.legal:
+                balloonBar.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map,Fragment_Legal.newInstance(R.id.fragment_legal))
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.events:
+                balloonBar.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map,Fragment_Events.newInstance(R.id.fragment_events))
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.settings:
+                balloonBar.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map,Fragment_Settings.newInstance(R.id.fragment_settings))
                         .addToBackStack(null)
