@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#263238"
     android:id="@+id/fragment_legal"
-    tools:context="com.test.vaibhav.environmentresponse.MapsActivity"
-    >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Legal Page"
-            android:textColor="#90CAF9"
-            />
-
-</LinearLayout>
+    tools:context="com.test.vaibhav.environmentresponse.MapsActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Legal Page"
+        android:textColor="#90CAF9"
+        android:id="@+id/legal_page_title"
+        android:clickable="false"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About This App"
+        android:textAllCaps="false"
+        android:layout_below="@id/legal_page_title"
+        android:layout_marginTop="24dp"
+        android:id="@+id/about"
+        android:layout_alignParentLeft="true"
+        android:textColor="#90CAF9"
+        android:clickable="true"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terms and Conditions"
+        android:textAllCaps="false"
+        android:layout_below="@id/about"
+        android:layout_marginTop="24dp"
+        android:id="@+id/t_and_c"
+        android:layout_alignParentLeft="true"
+        android:textColor="#90CAF9"
+        android:clickable="true"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy"
+        android:textAllCaps="false"
+        android:layout_below="@id/t_and_c"
+        android:layout_marginTop="24dp"
+        android:id="@+id/privacy_policy"
+        android:layout_alignParentLeft="true"
+        android:textColor="#90CAF9"
+        android:clickable="true"
+        />
+</RelativeLayout>

@@ -4,15 +4,133 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#263238"
+    android:background="@color/colorTopActionBar"
     android:id="@+id/fragment_issues"
     tools:context="com.test.vaibhav.environmentresponse.MapsActivity"
     >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reporting Issues Page"
-        android:textColor="#90CAF9"
+        android:text="Report An Issues"
+        android:id="@+id/reportIssuePageTitle"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Issue Type"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="24dp"
         />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trash"
+            android:textAllCaps="false"
+            android:id="@+id/check_trash"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="24dp"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Air"
+            android:textAllCaps="false"
+            android:id="@+id/check_air"
+            android:layout_toRightOf="@id/check_trash"
+            android:layout_marginLeft="48dp"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Water"
+            android:textAllCaps="false"
+            android:id="@+id/check_water"
+            android:layout_below="@id/check_trash"
+            android:layout_marginLeft="24dp"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soil"
+            android:textAllCaps="false"
+            android:id="@+id/check_soil"
+            android:layout_below="@id/check_air"
+            android:layout_toRightOf="@id/check_water"
+            android:layout_marginLeft="48dp"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plant"
+            android:textAllCaps="false"
+            android:id="@+id/check_plant"
+            android:layout_below="@id/check_water"
+            android:layout_marginLeft="24dp"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:textAllCaps="false"
+            android:id="@+id/check_other"
+            android:layout_below="@id/check_soil"
+            android:layout_toRightOf="@id/check_plant"
+            android:layout_marginLeft="48dp"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description: "
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
 
+        />
+    <EditText
+        android:id="@+id/issue_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:maxLines="4"
+        >
+        <requestFocus />
+    </EditText>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Photo Upload:"
+        android:textAllCaps="false"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorPrimaryDark"
+        />
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/imageToUpload"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Drop Pin on Map: "
+        android:textAllCaps="false"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorPrimaryDark"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Submit"
+        android:id="@+id/submit_issue"
+        android:textAllCaps="false"
+        />
 </LinearLayout>

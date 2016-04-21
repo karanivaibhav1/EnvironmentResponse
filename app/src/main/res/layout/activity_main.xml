@@ -38,7 +38,6 @@
             android:minHeight="?attr/actionBarSize"
             android:layout_alignParentEnd="true"
             android:id="@+id/balloon_bar">
-
         </android.support.v7.widget.Toolbar>
     </RelativeLayout>
     <android.support.design.widget.NavigationView

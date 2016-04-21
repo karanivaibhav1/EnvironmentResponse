@@ -3,6 +3,8 @@ package com.test.vaibhav.environmentresponse;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -15,8 +17,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -28,6 +33,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
+import java.lang.ref.WeakReference;
+
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener
 {
@@ -38,9 +47,9 @@ public class MapsActivity extends AppCompatActivity
 
     Fragment currFragment;
     Toolbar toolbar;
-    NavigationView nv;
-    DrawerLayout dl;
-    ActionBarDrawerToggle abdt;
+    NavigationView navigation_view;
+    DrawerLayout drawer_layout;
+    ActionBarDrawerToggle action_bar_drawer_toggle;
     Toolbar balloonBar;
 
     public boolean checkLocationPermission() {
@@ -113,6 +122,12 @@ public class MapsActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu (Menu menu){
+        getMenuInflater().inflate(R.menu.notification_dropdown, menu);
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -137,13 +152,13 @@ public class MapsActivity extends AppCompatActivity
         balloonBar=(Toolbar) findViewById(R.id.balloon_bar);
         balloonBar.inflateMenu(R.menu.balloonbar);
         setUpToolBarItemSelected(savedInstanceState);
+        balloonBar.setVisibility(View.VISIBLE);
+        navigation_view=(NavigationView)findViewById(R.id.navigation_view);
+        navigation_view.setNavigationItemSelectedListener(this);
 
-        nv=(NavigationView)findViewById(R.id.navigation_view);
-        nv.setNavigationItemSelectedListener(this);
+        drawer_layout=(DrawerLayout)findViewById(R.id.drawer);
 
-        dl=(DrawerLayout)findViewById(R.id.drawer);
-
-        abdt=new ActionBarDrawerToggle(this,dl,
+        action_bar_drawer_toggle=new ActionBarDrawerToggle(this,drawer_layout,
                 toolbar,
                 R.string.drawer_open,
                 R.string.drawer_close){
@@ -154,13 +169,49 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView){
                 super.onDrawerOpened(drawerView);
+                TextView name = (TextView) findViewById(R.id.name);
+                name.setText(UserContext.getDisplayName());
+                TextView email = (TextView) findViewById(R.id.email);
+                email.setText(UserContext.getEmail());
+                ImageView profileImage = (ImageView) findViewById(R.id.profile_image);
+                MyDownloadImageAsyncTask task = new MyDownloadImageAsyncTask(profileImage);
+                task.execute(UserContext.getProfileImageURL());
             }
         };
-        dl.setDrawerListener(abdt);
-        abdt.syncState();
-    }
+        drawer_layout.setDrawerListener(action_bar_drawer_toggle);
+        action_bar_drawer_toggle.syncState();
 
-    public void setUpToolBarItemSelected(final Bundle bundle){
+    }
+    private class MyDownloadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
+        private final WeakReference<ImageView> imageViewReference;
+        public MyDownloadImageAsyncTask(ImageView imv){
+            imageViewReference = new WeakReference<ImageView>(imv);
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... urls){
+            Bitmap bitmap = null;
+            for(String url : urls){
+                bitmap = UserContext.downloadImageusingHTTPGetRequest(url);
+                if(bitmap!=null){
+                    //   mImgMemoryCache.put(url,bitmap);
+                }
+            }
+            return bitmap;
+        }
+
+        //sets the bitmap returned by doInBackground
+        @Override
+        protected void onPostExecute(Bitmap bitmap){
+            if(imageViewReference != null && bitmap != null ){
+                final ImageView imageView = imageViewReference.get();
+                if (imageView != null){
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
+    public void setUpToolBarItemSelected(final Bundle bundle) {
         balloonBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -184,14 +235,6 @@ public class MapsActivity extends AppCompatActivity
                 return true;
             }
         });
-        /*balloonBar.setNavigationIcon(R.drawable.balloon);
-        balloonBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                balloonBar.setVisibility(View.GONE);
-            }
-        });*/
-
     }
 
     /**
@@ -220,6 +263,7 @@ public class MapsActivity extends AppCompatActivity
             mMap=mapFrag.getMap();
         }
         Log.d("inside init map", "value is " + (mMap != null));
+        checkLocationPermission();
         return (mMap!=null);
     }
     @Override
@@ -240,6 +284,10 @@ public class MapsActivity extends AppCompatActivity
             CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
             mMap.moveCamera(update);
         }
+        checkLocationPermission();
+        if(balloonBar!=null)
+            balloonBar.setVisibility(View.VISIBLE);
+
     }
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
@@ -277,7 +325,25 @@ public class MapsActivity extends AppCompatActivity
             default:
                 break;
         }
-        dl.closeDrawer(GravityCompat.START);
+        drawer_layout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item){
+        int id = item.getItemId();
+        switch(id){
+            case R.id.action_notification_dropdown:
+                balloonBar.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("click on notificaitons","test");
+                return true;
+            default:
+                Log.d("click on notificaitons","default");
+                return false;
+        }
     }
 }
