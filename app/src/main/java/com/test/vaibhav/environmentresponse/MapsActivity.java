@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -24,11 +26,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,6 +58,7 @@ public class MapsActivity extends AppCompatActivity
     DrawerLayout drawer_layout;
     ActionBarDrawerToggle action_bar_drawer_toggle;
     Toolbar balloonBar;
+    private final Firebase ref = new Firebase("https://environmentresponse.firebaseio.com/Issues");
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -250,10 +258,68 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng suCollege = new LatLng(43.037556, -76.132639);
-        mMap.addMarker(new MarkerOptions().position(suCollege).title("Life Sciences Bulding"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suCollege, DEFAULT_ZOOM));
+        if(checkLocationPermission())
+            mMap.setMyLocationEnabled(true);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(loc!=null) {
+            double latitude = loc.getLatitude();
+            double longitude = loc.getLongitude();
+            LatLng latLng = new LatLng(latitude, longitude);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
+            Log.d("Location","User location loaded");
+        }
+        else {
+            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(suCollege, DEFAULT_ZOOM));
+            Log.d("Location", "Location not found");
+        }
+        loadMarkers(mMap);
+    }
+    private void loadMarkers(GoogleMap googleMap){
+
+        mMap = googleMap;
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suCollege, DEFAULT_ZOOM));
+        Log.d("Testing firebase", "loadMarkers");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase",""+snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(),post.getLocationLng());
+                    if(post.getTypeAir()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    else if (post.getTypeWater()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    else if (post.getTypeTrash()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                    else if (post.getTypeSoil()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                    else if (post.getTypePlant()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    else if (post.getTypeOther()==1)
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+               Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
     }
     private boolean initMap()
     {
@@ -264,6 +330,7 @@ public class MapsActivity extends AppCompatActivity
         }
         Log.d("inside init map", "value is " + (mMap != null));
         checkLocationPermission();
+
         return (mMap!=null);
     }
     @Override
@@ -296,10 +363,8 @@ public class MapsActivity extends AppCompatActivity
         {
             case R.id.issue:
                 balloonBar.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.map,Fragment_Issues.newInstance(R.id.fragment_issues))
-                        .addToBackStack(null)
-                        .commit();
+                Intent intent = new Intent(this, Activity_ReportIssue.class);
+                startActivity(intent);
                 break;
             case R.id.legal:
                 balloonBar.setVisibility(View.GONE);

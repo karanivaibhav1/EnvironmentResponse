@@ -44,9 +44,9 @@ public class User_ReportedIssues {
         @JsonProperty("Image")
         private String Image;
         @JsonProperty("Location_Lat")
-        private double Location_Lat;
+        private String Location_Lat;
         @JsonProperty("Location_Lng")
-        private double Location_Lng;
+        private String Location_Lng;
         @JsonIgnore
         private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -259,7 +259,11 @@ public class User_ReportedIssues {
      */
     @JsonProperty("Location_Lat")
     public double getLocationLat() {
-        return Location_Lat;
+        double lat=0;
+        if(Location_Lat!="NaN" && Location_Lat!="" && Location_Lat!=null)
+            lat = Double.valueOf(Location_Lat);
+
+        return lat;
     }
 
     /**
@@ -268,7 +272,7 @@ public class User_ReportedIssues {
      * The Location
      */
     @JsonProperty("Location_Lat")
-    public void setLocationLat(double Location) {
+    public void setLocationLat(String Location) {
         Location_Lat = Location;
     }
 
@@ -279,7 +283,10 @@ public class User_ReportedIssues {
      */
     @JsonProperty("Location_Lng")
     public double getLocationLng() {
-        return Location_Lng;
+        double lng=0;
+        if(Location_Lng!="NaN" && Location_Lng!="" && Location_Lng!=null)
+            lng=Double.valueOf(Location_Lng);
+        return lng;
     }
 
     /**
@@ -288,7 +295,7 @@ public class User_ReportedIssues {
      * The Location
      */
     @JsonProperty("Location_Lng")
-    public void setLocationLng(double Location) {
+    public void setLocationLng(String Location) {
         Location_Lng = Location;
     }
 

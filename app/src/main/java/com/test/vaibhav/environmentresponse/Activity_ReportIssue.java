@@ -72,7 +72,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     Location mCurrentLocation;
     private static final long INTERVAL = 1000 * 10;
     private static final long FASTEST_INTERVAL = 1000 * 5;
-    double Latitude = 0, Longitude = 0;
+    String Latitude = "NaN", Longitude = "NaN";
 
 
     @Override
@@ -190,10 +190,10 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                 String reporter = UserContext.getDisplayName();
                 issue.setReporter(reporter);
 
-                Log.d("Location","latitude onCreateView"+ Latitude);
+                Log.d("Location", "latitude onCreateView" + Latitude);
                 Log.d("Location", "longitude onCreateView" + Longitude);
                 issue.setLocationLat(Latitude);
-                issue.setLocationLng(Latitude);
+                issue.setLocationLng(Longitude);
 
                 ref.push().setValue(issue);
                 //Toast.makeText(getParent(), "Issue Created", Toast.LENGTH_SHORT).show();
@@ -366,10 +366,10 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
 
-        Latitude = mCurrentLocation.getLatitude();
-        Longitude = mCurrentLocation.getLongitude();
-        Log.d("Location","latitude onLocation"+ Latitude);
-        Log.d("Location","longitude onLocation"+Longitude);
+        Latitude = String.valueOf(mCurrentLocation.getLatitude());
+        Longitude = String.valueOf(mCurrentLocation.getLongitude());
+        Log.d("Testing","latitude onLocation"+ Latitude);
+        Log.d("Testing","longitude onLocation"+Longitude);
     }
 
     @Override
