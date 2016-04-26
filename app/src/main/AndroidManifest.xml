@@ -50,6 +50,7 @@
 
         <activity android:name=".Activity_Login"/>
 
+        <activity android:name=".Activity_ReportIssue"/>
 
         <activity
             android:name=".MapsActivity"
