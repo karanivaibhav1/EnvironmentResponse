@@ -41,22 +41,15 @@ public class User_ReportedIssues {
         private Integer TypeTrash;
         @JsonProperty("Type_Water")
         private Integer TypeWater;
+        @JsonProperty("Image")
+        private String Image;
+        @JsonProperty("Location_Lat")
+        private double Location_Lat;
+        @JsonProperty("Location_Lng")
+        private double Location_Lng;
         @JsonIgnore
         private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-/*        public User_ReportedIssues(String date, String desc, String reporter, Integer air, Integer other, Integer plant, Integer water, Integer soil,
-                                   Integer trash){
-                Date = date;
-                Reporter = reporter;
-                TypeAir=air;
-                TypeOther=other;
-                Description=desc;
-                TypeWater=water;
-                TypeSoil=soil;
-                TypePlant=plant;
-                TypeTrash=trash;
-        }
-*/
         /**
          *
          * @return
@@ -236,6 +229,69 @@ public class User_ReportedIssues {
         public void setTypeWater(Integer TypeWater) {
             this.TypeWater = TypeWater;
         }
+
+
+
+    /**
+     *
+     * @return
+     * The Uploaded Image
+     */
+    @JsonProperty("Image")
+    public String getImage() {
+        return Image;
+    }
+
+    /**
+     *
+     * @param Image
+     * The Uploaded Image
+     */
+    @JsonProperty("Image")
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+
+    /**
+     *
+     * @return
+     * The Location
+     */
+    @JsonProperty("Location_Lat")
+    public double getLocationLat() {
+        return Location_Lat;
+    }
+
+    /**
+     *
+     * @param Location
+     * The Location
+     */
+    @JsonProperty("Location_Lat")
+    public void setLocationLat(double Location) {
+        Location_Lat = Location;
+    }
+
+    /**
+     *
+     * @return
+     * The Location
+     */
+    @JsonProperty("Location_Lng")
+    public double getLocationLng() {
+        return Location_Lng;
+    }
+
+    /**
+     *
+     * @param Location
+     * The Location
+     */
+    @JsonProperty("Location_Lng")
+    public void setLocationLng(double Location) {
+        Location_Lng = Location;
+    }
+
 
         @JsonAnyGetter
         public Map<String, Object> getAdditionalProperties() {
