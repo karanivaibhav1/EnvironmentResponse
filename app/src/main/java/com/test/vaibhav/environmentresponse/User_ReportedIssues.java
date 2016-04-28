@@ -19,7 +19,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "Type_Plant",
         "Type_Soil",
         "Type_Trash",
-        "Type_Water"
+        "Type_Water",
+        "Image",
+        "Location_Lat",
+        "Location_Lat"
 })
 
 public class User_ReportedIssues {

@@ -9,4 +9,10 @@
         android:title="Notifications"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/action_view_all_issues"
+        android:orderInCategory="100"
+        android:title="ViewAllIssues"
+        app:showAsAction="never"
+        />
 </menu>

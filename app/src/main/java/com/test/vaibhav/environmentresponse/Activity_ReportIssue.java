@@ -22,12 +22,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.location.LocationManager;
@@ -54,7 +56,6 @@ public class Activity_ReportIssue extends AppCompatActivity implements
         LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener
-
 {
 
     Toolbar toolbar;
@@ -63,7 +64,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     ActionBarDrawerToggle action_bar_drawer_toggle;
     User_ReportedIssues issue= new User_ReportedIssues();
     final Firebase ref = new Firebase("https://environmentresponse.firebaseio.com/Issues");
-    private static final String ARG_SECTION_NUMBER = "selection_number";
+
     private static final int RESULT_LOAD_IMAGE = 1;
     ImageView uploadImage;
     LocationManager mLocationManager;
@@ -73,6 +74,8 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     private static final long INTERVAL = 1000 * 10;
     private static final long FASTEST_INTERVAL = 1000 * 5;
     String Latitude = "NaN", Longitude = "NaN";
+    private static final int CAMERA_REQUEST_CODE = 2;
+    private static final int GALLERY_REQUEST_CODE = 1;
 
 
     @Override
@@ -206,8 +209,28 @@ public class Activity_ReportIssue extends AppCompatActivity implements
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.upload_from_gallery:
+                                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+                                return true;
+                            case R.id.upload_from_camera:
+                                intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                                startActivityForResult(intent, CAMERA_REQUEST_CODE);
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.upload_image_popup,popup.getMenu());
+                popup.show();
             }
         });
 
@@ -244,11 +267,12 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         int id=item.getItemId();
+        Intent intent;
         switch(id)
         {
-            case R.id.issue:
+            case R.id.goto_events:
 
-                Intent intent = new Intent(this, Activity_ReportIssue.class);
+                intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.legal:
@@ -259,11 +283,8 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                         .commit();
                 break;
             case R.id.events:
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.map,Fragment_Events.newInstance(R.id.fragment_events))
-                        .addToBackStack(null)
-                        .commit();
+                intent = new Intent(this, Activity_CreateEvent.class);
+                startActivity(intent);
                 break;
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction()
@@ -284,7 +305,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
         switch(id){
             case R.id.action_notification_dropdown:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.map,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
+                        .replace(R.id.drawer,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
                         .addToBackStack(null)
                         .commit();
                 Log.d("click on notificaitons", "test");
@@ -381,13 +402,12 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data !=null){
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data !=null){
             Uri selectedImage = data.getData();
             if(uploadImage!=null) {
                 uploadImage.setImageURI(selectedImage);
                 try {
                     Bitmap bmp = ((BitmapDrawable) uploadImage.getDrawable()).getBitmap();
-
                     ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
                     //bmp.recycle();
@@ -399,6 +419,23 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                     Log.d("image", "image too large");
                     e.printStackTrace();
                 }
+            }
+        }
+        else if(requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK && data !=null){
+            try {
+
+                Bitmap bmp = (Bitmap) data.getExtras().get("data");
+                uploadImage.setImageBitmap(bmp);
+                ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+                //bmp.recycle();
+                byte[] byteArray = bYtE.toByteArray();
+                String imageFile = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                issue.setImage(imageFile);
+
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

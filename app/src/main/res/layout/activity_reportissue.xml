@@ -143,5 +143,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/drawer_issue"/>
 </android.support.v4.widget.DrawerLayout>

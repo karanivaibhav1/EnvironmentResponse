@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -48,10 +49,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity_Login"/>
+        <activity android:name=".Activity_Login"
+            android:label="Login"/>
 
-        <activity android:name=".Activity_ReportIssue"/>
-
+        <activity android:name=".Activity_ReportIssue"
+            android:label="Report Issue"
+            />
+        <activity android:name=".Activity_CreateEvent"
+            android:label="Create Event"/>
+        <activity android:name=".Activity_ViewAllEvents"
+            android:label="Issues"/>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">

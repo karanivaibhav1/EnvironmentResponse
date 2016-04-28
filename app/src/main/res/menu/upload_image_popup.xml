@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorAccent">
+    <item
+        android:id="@+id/upload_from_gallery"
+        android:checked="false"
+        android:title="Gallery"/>
+    <item
+        android:id="@+id/upload_from_camera"
+        android:checked="false"
+        android:title="Camera"/>
+</menu>

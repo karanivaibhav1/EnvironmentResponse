@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     tools:context=".MapsActivity">
+
     <item
         android:id="@+id/loon_trash"
         android:title="Trash"
@@ -32,6 +33,11 @@
     <item
         android:id="@+id/loon_other"
         android:title="Others"
-        android:icon="@drawable/loon_other"
+        android:icon="@drawable/loon_others"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/loon_all"
+        android:title="Others"
+        android:icon="@drawable/loon_white"
         app:showAsAction="always|collapseActionView"/>
 </menu>

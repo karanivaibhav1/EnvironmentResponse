@@ -52,7 +52,6 @@ public class MapsActivity extends AppCompatActivity
     private static final float DEFAULT_ZOOM = 10;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    Fragment currFragment;
     Toolbar toolbar;
     NavigationView navigation_view;
     DrawerLayout drawer_layout;
@@ -226,21 +225,176 @@ public class MapsActivity extends AppCompatActivity
                 int id = menuItem.getItemId();
                 switch (id) {
                     case R.id.loon_trash:
+                        mMap.clear();
+                        loadTrashMarkers();
                         return true;
                     case R.id.loon_air:
+                        mMap.clear();
+                        loadAirMarkers();
                         return true;
                     case R.id.loon_soil:
+                        mMap.clear();
+                        loadSoilMarkers();
                         return true;
                     case R.id.loon_plant:
+                        mMap.clear();
+                        loadPlantMarkers();
                         return true;
                     case R.id.loon_water:
+                        mMap.clear();
+                        loadWaterMarkers();
                         return true;
                     case R.id.loon_other:
+                        mMap.clear();
+                        loadOtherMarkers();
                         return true;
+                    case R.id.loon_all:
+                        mMap.clear();
+                        loadAllMarkers();
                     default:
                         break;
                 }
                 return true;
+            }
+        });
+    }
+
+    private void loadTrashMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeTrash() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
+    }
+
+    private void loadWaterMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeWater() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
+    }
+    private void loadPlantMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypePlant() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
+    }
+    private void loadSoilMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeSoil() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
+    }
+    private void loadOtherMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeOther() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
+            }
+        });
+    }
+    private void loadAirMarkers(){
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
+                    //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeAir() == 1) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(temp)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d("The read failed: ", firebaseError.getMessage());
             }
         });
     }
@@ -273,51 +427,50 @@ public class MapsActivity extends AppCompatActivity
             //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(suCollege, DEFAULT_ZOOM));
             Log.d("Location", "Location not found");
         }
-        loadMarkers(mMap);
+        loadAllMarkers();
     }
-    private void loadMarkers(GoogleMap googleMap){
-
-        mMap = googleMap;
+    private void loadAllMarkers(){
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suCollege, DEFAULT_ZOOM));
         Log.d("Testing firebase", "loadMarkers");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Log.d("Testing firebase",""+snapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                Log.d("Testing firebase", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     User_ReportedIssues post = postSnapshot.getValue(User_ReportedIssues.class);
                     //Log.d("Testing firebase",""+post.getLocationLat()+post.getLocationLng());
-                    LatLng temp = new LatLng(post.getLocationLat(),post.getLocationLng());
-                    if(post.getTypeAir()==1)
+                    LatLng temp = new LatLng(post.getLocationLat(), post.getLocationLng());
+                    if (post.getTypeAir() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                    else if (post.getTypeWater()==1)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    else if (post.getTypeWater() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                    else if (post.getTypeTrash()==1)
+                    else if (post.getTypeTrash() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
-                    else if (post.getTypeSoil()==1)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                    else if (post.getTypeSoil() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                    else if (post.getTypePlant()==1)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    else if (post.getTypePlant() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    else if (post.getTypeOther()==1)
+                    else if (post.getTypeOther() == 1)
                         mMap.addMarker(new MarkerOptions()
                                 .position(temp)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
                 }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-               Log.d("The read failed: ", firebaseError.getMessage());
+                Log.d("The read failed: ", firebaseError.getMessage());
             }
         });
     }
@@ -359,11 +512,12 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         int id=item.getItemId();
+        Intent intent;
         switch(id)
         {
             case R.id.issue:
                 balloonBar.setVisibility(View.GONE);
-                Intent intent = new Intent(this, Activity_ReportIssue.class);
+                intent = new Intent(this, Activity_ReportIssue.class);
                 startActivity(intent);
                 break;
             case R.id.legal:
@@ -375,10 +529,8 @@ public class MapsActivity extends AppCompatActivity
                 break;
             case R.id.events:
                 balloonBar.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.map,Fragment_Events.newInstance(R.id.fragment_events))
-                        .addToBackStack(null)
-                        .commit();
+                intent = new Intent(this, Activity_CreateEvent.class);
+                startActivity(intent);
                 break;
             case R.id.settings:
                 balloonBar.setVisibility(View.GONE);
@@ -406,9 +558,12 @@ public class MapsActivity extends AppCompatActivity
                         .commit();
                 Log.d("click on notificaitons","test");
                 return true;
+            case R.id.action_view_all_issues:
+                Intent intent = new Intent(this, Activity_ViewAllEvents.class);
+                startActivity(intent);
             default:
                 Log.d("click on notificaitons","default");
                 return false;
         }
     }
-}
+    }
