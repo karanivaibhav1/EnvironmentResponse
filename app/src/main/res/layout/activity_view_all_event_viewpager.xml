@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:fitsSystemWindows="true">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
+    <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools.context = "com.test.vaibhav.environmentresponse.Activity_ViewAllEvents">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/coordinator_appBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/coordinator_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways|snap"/>
 
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        >
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimaryDark"
+            app:tabMode="scrollable"
+            app:tabGravity="fill"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -33,4 +57,6 @@
         tools:context = ".Activity_ViewAllEvents"
         />
 
-</LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>
