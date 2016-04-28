@@ -1,4 +1,4 @@
-package com.test.vaibhav.environmentresponse;
+package com.gaikwadkaraniapps.vaibhav.environmentresponse;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -40,9 +40,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Activity_CreateEvent extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -305,7 +303,7 @@ public class Activity_CreateEvent extends AppCompatActivity implements
                                         .replace(R.id.drawer,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
                                         .addToBackStack(null)
                                         .commit();
-                                Log.d("click on notificaitons", "test");
+                                Log.d("click on notificaitons", "gaikwadkaraniapps");
                                 return true;
                         default:
                                 Log.d("click on notificaitons","default");
