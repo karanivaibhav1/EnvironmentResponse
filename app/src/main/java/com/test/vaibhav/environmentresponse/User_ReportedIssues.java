@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+        "Title",
         "Date",
         "Description",
         "Reporter",
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 
 public class User_ReportedIssues {
+        @JsonProperty("Title")
+        private String Title;
         @JsonProperty("Date")
         private String Date;
         @JsonProperty("Description")
@@ -52,6 +55,27 @@ public class User_ReportedIssues {
         private String Location_Lng;
         @JsonIgnore
         private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+
+    /**
+     *
+     * @return
+     * The Title
+     */
+    @JsonProperty("Title")
+    public String getTitle() {
+        return Title;
+    }
+
+    /**
+     *
+     * @param Title
+     * The Date
+     */
+    @JsonProperty("Title")
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
 
         /**
          *

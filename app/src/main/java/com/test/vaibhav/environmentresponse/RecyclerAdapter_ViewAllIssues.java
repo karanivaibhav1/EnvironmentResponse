@@ -17,37 +17,39 @@ import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
-/**
- * Created by Jesica on 4/26/2016.
- */
+
 public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_ReportedIssues,RecyclerAdapter_ViewAllIssues.AllEventsViewHolder> {
 
 
     private Context mContext;
     private static final Firebase ref= new Firebase("https://environmentresponse.firebaseio.com/Issues");
-    private String type;
-    private boolean flag;
+    private User_ReportedIssues issues;
 
     public RecyclerAdapter_ViewAllIssues(Class<User_ReportedIssues> modelClass, int modelLayout,
                                          Class<AllEventsViewHolder> holder, Query ref, Context context){
         super(modelClass, modelLayout, holder, ref);
         this.mContext=context;
+        //issues= ur_issues;
+        issues= new User_ReportedIssues();
     }
 
     @Override
     protected void populateViewHolder(AllEventsViewHolder aeViewHolder, User_ReportedIssues issues, int i){
-        //Log.d("fb recycle adapter", "populating holder" + issues.getDescription() + "desc");
-        //aeViewHolder.vTitle.setText(notifications.getName());
+        this.issues=issues;
         aeViewHolder.vDesc.setText(issues.getDescription());
+        aeViewHolder.vTitle.setText(issues.getTitle());
         aeViewHolder.vImage.setImageBitmap(stringToBitMap(issues.getImage()));
+        animate(aeViewHolder);
     }
 
     public class AllEventsViewHolder extends RecyclerView.ViewHolder{
         public TextView vDesc;
+        public TextView vTitle;
         public ImageView vImage;
         public AllEventsViewHolder(View v){
             super(v);
             vDesc=(TextView) v.findViewById(R.id.event_desc_recycler);
+            vTitle=(TextView) v.findViewById(R.id.event_title_recycler);
             vImage= (ImageView) v.findViewById(R.id.event_image_recycler);
         }
         public void bindEventData(String type){
@@ -66,7 +68,8 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
         }
     }
     @Override
-    public RecyclerAdapter_ViewAllIssues.AllEventsViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    public RecyclerAdapter_ViewAllIssues.AllEventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+
 
         AllEventsViewHolder vh;
         View v= LayoutInflater.from(mContext)
@@ -78,4 +81,13 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
         final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(mContext, R.anim.bounce_interpolator);
         viewHolder.itemView.setAnimation(animAnticipateOvershoot);
     }
+    /*@Override
+    public void onBindViewHolder(AllEventsViewHolder aeViewHolder, int position) {
+
+        aeViewHolder.vDesc.setText(issues.getDescription());
+        aeViewHolder.vImage.setImageBitmap(stringToBitMap(issues.getImage()));
+
+        animate(aeViewHolder);
+
+    }*/
 }

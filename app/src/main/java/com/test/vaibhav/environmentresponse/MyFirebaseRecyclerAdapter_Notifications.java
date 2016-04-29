@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.firebase.client.Query;
@@ -23,11 +25,12 @@ public class MyFirebaseRecyclerAdapter_Notifications extends FirebaseRecyclerAda
     }
     @Override
     protected void populateViewHolder(User_NotificationsViewHolder unViewHolder, User_Notifications notifications, int i){
-        Log.d("fb recycle adapter","populating holder"+notifications.getName()+"name");
-        Log.d("name is  ",notifications.getName());
-        Log.d("desc is  ",notifications.getDescription());
+        //Log.d("fb recycle adapter","populating holder"+notifications.getName()+"name");
+        //Log.d("name is  ",notifications.getName());
+        //Log.d("desc is  ",notifications.getDescription());
         unViewHolder.vTitle.setText(notifications.getName());
         unViewHolder.vDesc.setText(notifications.getDescription());
+        animate(unViewHolder);
     }
     public static class User_NotificationsViewHolder extends RecyclerView.ViewHolder {
         public TextView vTitle;
@@ -47,5 +50,9 @@ public class MyFirebaseRecyclerAdapter_Notifications extends FirebaseRecyclerAda
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_layout, parent,false);
         User_NotificationsViewHolder unvh = new User_NotificationsViewHolder(v);
         return unvh;
+    }
+    public void animate(RecyclerView.ViewHolder viewHolder) {
+        final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(mContext, R.anim.anticipateovershoot_interpolator);
+        viewHolder.itemView.setAnimation(animAnticipateOvershoot);
     }
 }
