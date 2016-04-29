@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;
@@ -51,29 +54,46 @@ public class Fragment_IssuesList extends Fragment {
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(getActivity());
         setHasOptionsMenu(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-/*
-        qref= ref.getRef().equalTo(type);
-        qref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        Log.d("qref value:  ", qref.toString());
-  */
 
         qref = ref.orderByChild(type).equalTo(1);
         //qref = qref.orderByChild(type).equalTo(0);
 
         mRecyclerViewAdapter = new RecyclerAdapter_ViewAllIssues(User_ReportedIssues.class,R.layout.frament_view_all_issues_recycleradapter,RecyclerAdapter_ViewAllIssues.AllEventsViewHolder.class,qref,getActivity());
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-
+        setHasOptionsMenu(true);
         return rootView;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
+        if (menu.findItem(R.id.search)==null) {
+            menuInflater.inflate(R.menu.search_bar, menu);
+        }
+        mRecyclerView=(RecyclerView) getActivity().findViewById(R.id.eventlist_cardList);
+        SearchView search=(SearchView) menu.findItem(R.id.search).getActionView();
+        if(search!=null)
+        {
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+                @Override
+                public boolean onQueryTextSubmit(String query){
+                    int i=0;
+                    //for(;i<md.getSize();i++)
+                    //{
+                     //   if(query.equalsIgnoreCase((String) md.getItem(i).get("name"))){
+                      //      break;
+                       // }
+                    //}
+                    //if(i>=0 && i<md.getSize()){
+                        mRecyclerView.scrollToPosition(i+1);
+                    //}
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextChange(String query){
+                    return true;
+                }
+            });
+        }
+
+        super.onCreateOptionsMenu(menu, menuInflater);
     }
 }

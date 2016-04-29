@@ -1,11 +1,13 @@
 package com.test.vaibhav.environmentresponse;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -41,7 +43,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.lang.ref.WeakReference;
 
 public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener
+        implements OnMapReadyCallback,
+                    NavigationView.OnNavigationItemSelectedListener,
+                    Fragment_Legal.OnTextClickedListener
+
 {
 
     private GoogleMap mMap;
@@ -563,9 +568,33 @@ public class MapsActivity extends AppCompatActivity
                 intent = new Intent (this, Activity_ViewAllEvents.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_rate_this_app:
+                //Log.d("package name is ",getApplicationContext().getPackageName());
+                Uri uri = Uri.parse("market://details?id=" + getApplicationContext().getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
+                }
             default:
                 Log.d("click on notificaitons","default");
                 return false;
         }
     }
+    @Override
+    public void onTextClicked(int position){
+        Intent intent;
+        switch (position){
+            case R.id.about_this_app:
+                intent = new Intent (this , Activity_AboutPage.class);
+                startActivity(intent);
+        }
     }
+}

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.SearchView;
 
 public class Activity_ViewAllIssues extends AppCompatActivity {
     Adapter_ViewAllIssues allEvents;
@@ -25,11 +29,9 @@ public class Activity_ViewAllIssues extends AppCompatActivity {
         tab_layout.setupWithViewPager(view_pager);
 
 
-        view_pager.setPageTransformer(false,new ViewPager.PageTransformer()
-        {
+        view_pager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
-            public void transformPage(View page,float position)
-            {
+            public void transformPage(View page, float position) {
                 //final float normalised_position=Math.abs(Math.abs(position)-1);
                 //page.setScaleX(normalised_position/2+0.5f);
                 //page.setScaleY(normalised_position/2+0.5f);

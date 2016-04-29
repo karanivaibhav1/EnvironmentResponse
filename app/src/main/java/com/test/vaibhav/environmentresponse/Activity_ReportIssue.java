@@ -3,6 +3,8 @@ package com.test.vaibhav.environmentresponse;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +20,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
@@ -32,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.location.LocationManager;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
@@ -75,7 +79,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
     String Latitude = "NaN", Longitude = "NaN";
     private static final int CAMERA_REQUEST_CODE = 2;
     private static final int GALLERY_REQUEST_CODE = 1;
-
+    private NotificationCompat.Builder mBuilder;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,6 +130,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
         if(location_latlon!=null)
             location_latlon.setText(Latitude+" , "+Longitude);
 */
+        mBuilder = new NotificationCompat.Builder(this);
         Button submit = (Button) findViewById(R.id.submit_issue);
 
         submit.setOnClickListener(new View.OnClickListener(){
@@ -179,9 +184,15 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                     issue.setTypeOther(0);
                 }
                 check_other.setChecked(false);
+
                 EditText editText = (EditText) findViewById(R.id.issue_desc);
                 String desc = editText.getText().toString();
                 issue.setDescription(desc);
+                editText.setText("");
+
+                editText = (EditText) findViewById(R.id.issue_title);
+                String title = editText.getText().toString();
+                issue.setTitle(title);
                 editText.setText("");
 
                 Date currDate = new Date();
@@ -198,10 +209,11 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                 issue.setLocationLng(Longitude);
 
                 ref.push().setValue(issue);
-                //Toast.makeText(getParent(), "Issue Created", Toast.LENGTH_SHORT).show();
-                TextView title = (TextView) findViewById(R.id.reportIssuePageTitle);
-                title.setText("Report Another Issue?");
+                Toast.makeText(getApplicationContext(), "Issue Created", Toast.LENGTH_SHORT).show();
+                TextView page_title = (TextView) findViewById(R.id.reportIssuePageTitle);
+                page_title.setText("Report Another Issue?");
                 uploadImage.setImageBitmap(null);
+                showNotifications(title);
             }
         });
         uploadImage = (ImageView) findViewById(R.id.imageToUpload);
@@ -233,6 +245,16 @@ public class Activity_ReportIssue extends AppCompatActivity implements
             }
         });
 
+    }
+    void showNotifications(String title){
+
+        mBuilder.setSmallIcon(R.drawable.notification_icon);
+        mBuilder.setContentTitle("Environment Response Issue");
+        mBuilder.setContentText("Issue " +title+" created");
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+// notificationID allows you to update the notification later on.
+        mNotificationManager.notify(0, mBuilder.build());
     }
     private class MyDownloadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
         private final WeakReference<ImageView> imageViewReference;

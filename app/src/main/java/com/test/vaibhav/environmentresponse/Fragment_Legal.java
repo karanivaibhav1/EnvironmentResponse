@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class Fragment_Legal extends Fragment {
 
@@ -25,6 +26,22 @@ public class Fragment_Legal extends Fragment {
     {
         View rootView=null;
         rootView=inflater.inflate(R.layout.fragment_legal,mainContainer,false);
+        final OnTextClickedListener mListener;
+        try {
+
+            mListener=(OnTextClickedListener) getContext();
+        }
+        catch(ClassCastException e) {
+            throw new ClassCastException("This is an exception");
+        }
+
+        TextView about_this_app = (TextView) rootView.findViewById(R.id.about_this_app);
+        about_this_app.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mListener.onTextClicked(R.id.about_this_app);
+            }
+        });
         return rootView;
     }
     @Override
@@ -32,5 +49,8 @@ public class Fragment_Legal extends Fragment {
     {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+    }
+    public interface OnTextClickedListener{
+        public void onTextClicked(int i);
     }
 }

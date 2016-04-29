@@ -3,6 +3,8 @@ package com.test.vaibhav.environmentresponse;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +18,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -65,6 +68,7 @@ public class Activity_CreateEvent extends AppCompatActivity implements
         private TextView dateView;
         private int year, month, day;
         private User_Events user_event = new User_Events();
+        private NotificationCompat.Builder mBuilder;
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,7 +127,7 @@ public class Activity_CreateEvent extends AppCompatActivity implements
                                 setDate(v);
                         }
                 });
-
+                mBuilder = new NotificationCompat.Builder(this);
                 Button create = (Button) findViewById(R.id.create_event);
                 create.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -193,13 +197,23 @@ public class Activity_CreateEvent extends AppCompatActivity implements
 
                                 ref.push().setValue(user_event);
                                 //Toast.makeText(getParent(), "user_event Created", Toast.LENGTH_SHORT).show();
-                                TextView title = (TextView) findViewById(R.id.createEventPageTitle);
-                                title.setText("Create another event?");
-
+                                TextView page_title = (TextView) findViewById(R.id.createEventPageTitle);
+                                page_title.setText("Create another event?");
+                                showNotifications(eventtitle);
                         }
                 });
 
 
+        }
+        void showNotifications(String title){
+
+                mBuilder.setSmallIcon(R.drawable.notification_icon);
+                mBuilder.setContentTitle("Environment Response Event");
+                mBuilder.setContentText("Event " +title+" created");
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+// notificationID allows you to update the notification later on.
+                mNotificationManager.notify(0, mBuilder.build());
         }
         @SuppressWarnings("deprecation")
         public void setDate(View view) {
