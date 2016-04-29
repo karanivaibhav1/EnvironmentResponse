@@ -7,7 +7,7 @@
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=86:5C:1E:C0:9E:99:36:E5:F2:12:1E:0A:39:5B:D5:E5:5D:38:AA:A7%3Bcom.test.vaibhav.environmentresponse
 
     You can also add your credentials to an existing key, using this line:
-    86:5C:1E:C0:9E:99:36:E5:F2:12:1E:0A:39:5B:D5:E5:5D:38:AA:A7;com.test.vaibhav.environmentresponse
+    86:5C:1E:C0:9E:99:36:E5:F2:12:1E:0A:39:5B:D5:E5:5D:38:AA:A7;gaikwadkaraniappswadkaraniapps.vaibhav.environmentresponse
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key

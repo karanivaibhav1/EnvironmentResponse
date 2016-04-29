@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools.context = "com.test.vaibhav.environmentresponse.Activity_ViewAllEvents">
+        tools.context = "com.test.vaibhav.environmentresponse.Activity_ViewAllIssues">
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,14 +47,14 @@
         android:id="@+id/pager"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        tools:context=".Activity_ViewAllEvents"/>
+        tools:context=".Activity_ViewAllIssues"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/activity_framelayout_eventdetails"
         tools:ignore ="MergeRootFrame"
-        tools:context = ".Activity_ViewAllEvents"
+        tools:context = ".Activity_ViewAllIssues"
         />
 
     </LinearLayout>

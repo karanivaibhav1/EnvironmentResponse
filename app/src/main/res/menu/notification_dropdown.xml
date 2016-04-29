@@ -12,7 +12,13 @@
     <item
         android:id="@+id/action_view_all_issues"
         android:orderInCategory="100"
-        android:title="ViewAllIssues"
+        android:title="View All Issues"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/action_view_all_events"
+        android:orderInCategory="100"
+        android:title="View All Events"
         app:showAsAction="never"
         />
 </menu>
