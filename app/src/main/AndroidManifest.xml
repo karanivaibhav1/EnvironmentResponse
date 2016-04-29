@@ -57,8 +57,12 @@
             />
         <activity android:name=".Activity_CreateEvent"
             android:label="Create Event"/>
-        <activity android:name=".Activity_ViewAllEvents"
+        <activity android:name=".Activity_ViewAllIssues"
             android:label="Issues"/>
+        <activity android:name=".Activity_ViewAllEvents"
+            android:label="Events"/>
+        <activity android:name=".Activity_AboutPage"
+            android:label="About Me"/>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
