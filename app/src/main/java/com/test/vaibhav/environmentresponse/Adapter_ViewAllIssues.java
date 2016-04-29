@@ -1,18 +1,16 @@
 package com.test.vaibhav.environmentresponse;
 
-import android.graphics.Movie;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
-public class Adapter_ViewAllEvents extends FragmentPagerAdapter {
+public class Adapter_ViewAllIssues extends FragmentPagerAdapter {
     int count;
     ArrayList<String> types = new ArrayList<String>();
-    public Adapter_ViewAllEvents(FragmentManager fm, int size)
+    public Adapter_ViewAllIssues(FragmentManager fm, int size)
     {
         super(fm);
         types.add("Type_Air");
@@ -27,7 +25,7 @@ public class Adapter_ViewAllEvents extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position)
     {
-        return Fragment_EventList.newInstance(types.get(position));
+        return Fragment_IssuesList.newInstance(types.get(position));
     }
     @Override
     public int getCount()

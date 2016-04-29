@@ -9,8 +9,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -39,8 +37,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 
@@ -549,6 +545,7 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
+        Intent intent;
         switch(id){
             case R.id.action_notification_dropdown:
                 balloonBar.setVisibility(View.GONE);
@@ -556,11 +553,16 @@ public class MapsActivity extends AppCompatActivity
                         .replace(R.id.map,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
                         .addToBackStack(null)
                         .commit();
-                Log.d("click on notificaitons","test");
+                Log.d("click on notificaitons", "gaikwadkaraniapps");
                 return true;
             case R.id.action_view_all_issues:
-                Intent intent = new Intent(this, Activity_ViewAllEvents.class);
+                intent = new Intent(this, Activity_ViewAllIssues.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_view_all_events:
+                intent = new Intent (this, Activity_ViewAllEvents.class);
+                startActivity(intent);
+                return true;
             default:
                 Log.d("click on notificaitons","default");
                 return false;

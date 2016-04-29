@@ -5,27 +5,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Jesica on 4/26/2016.
  */
-public class RecyclerAdapter_ViewAllEvents extends FirebaseRecyclerAdapter<User_ReportedIssues,RecyclerAdapter_ViewAllEvents.AllEventsViewHolder> {
+public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_ReportedIssues,RecyclerAdapter_ViewAllIssues.AllEventsViewHolder> {
 
 
     private Context mContext;
@@ -33,8 +28,8 @@ public class RecyclerAdapter_ViewAllEvents extends FirebaseRecyclerAdapter<User_
     private String type;
     private boolean flag;
 
-    public RecyclerAdapter_ViewAllEvents(Class<User_ReportedIssues> modelClass, int modelLayout,
-                                                   Class<AllEventsViewHolder> holder, Query ref, Context context){
+    public RecyclerAdapter_ViewAllIssues(Class<User_ReportedIssues> modelClass, int modelLayout,
+                                         Class<AllEventsViewHolder> holder, Query ref, Context context){
         super(modelClass, modelLayout, holder, ref);
         this.mContext=context;
     }
@@ -71,13 +66,16 @@ public class RecyclerAdapter_ViewAllEvents extends FirebaseRecyclerAdapter<User_
         }
     }
     @Override
-    public RecyclerAdapter_ViewAllEvents.AllEventsViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    public RecyclerAdapter_ViewAllIssues.AllEventsViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
 
         AllEventsViewHolder vh;
         View v= LayoutInflater.from(mContext)
-                .inflate(R.layout.frament_view_all_events_recycleradapter,parent,false);
+                .inflate(R.layout.frament_view_all_issues_recycleradapter,parent,false);
         vh=new AllEventsViewHolder(v);
         return vh;
     }
-
+    public void animate(RecyclerView.ViewHolder viewHolder) {
+        final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(mContext, R.anim.bounce_interpolator);
+        viewHolder.itemView.setAnimation(animAnticipateOvershoot);
+    }
 }

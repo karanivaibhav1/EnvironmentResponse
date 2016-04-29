@@ -37,6 +37,7 @@ public class RecyclerView_Fragment_Notifications extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
+
         return rootView;
     }
 }

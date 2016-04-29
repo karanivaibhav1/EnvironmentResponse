@@ -1,15 +1,12 @@
 package com.test.vaibhav.environmentresponse;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -22,7 +19,6 @@ import com.firebase.ui.auth.core.FirebaseLoginError;
 
 //import com.facebook.FacebookSdk;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 public class Activity_Login extends FirebaseLoginBaseActivity {
@@ -50,6 +46,8 @@ public class Activity_Login extends FirebaseLoginBaseActivity {
         setContentView(R.layout.activity_login);
         userNameET = (EditText)findViewById(R.id.edit_text_email);
         passwordET = (EditText)findViewById(R.id.edit_text_password);
+        //Activity_Login.this.showFirebaseLoginPrompt();
+
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override

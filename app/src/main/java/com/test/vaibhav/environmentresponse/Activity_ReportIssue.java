@@ -31,7 +31,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.location.LocationManager;
 
 import com.firebase.client.Firebase;
@@ -308,7 +307,7 @@ public class Activity_ReportIssue extends AppCompatActivity implements
                         .replace(R.id.drawer,RecyclerView_Fragment_Notifications.newInstance(R.id.cardList))
                         .addToBackStack(null)
                         .commit();
-                Log.d("click on notificaitons", "test");
+                Log.d("click on notificaitons", "gaikwadkaraniapps");
                 return true;
             default:
                 Log.d("click on notificaitons","default");
