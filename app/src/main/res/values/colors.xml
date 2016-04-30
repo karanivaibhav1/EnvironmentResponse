@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#12A084</color>
+    <color name="colorAccent">#17D3AE</color>
 
     <color name="colorPrimaryLight">#BBDEFB</color>
     <color name="colorPrimaryText">#212121</color>
@@ -10,7 +11,8 @@
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#B6B6B6</color>
 
-    <color name = "colorTopActionBar">#26A69A</color>
+    <color name = "colorTopActionBar">#D0D0D0</color>
     <color name="colorSystemNotifications">#009688</color>
+    <color name="TextColour">#1D2220</color>
 
 </resources>

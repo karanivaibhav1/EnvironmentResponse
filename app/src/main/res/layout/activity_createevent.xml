@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorTopActionBar"
+        android:background="#E0F2F1"
         android:id="@+id/fragment_event">
         <android.support.v7.widget.Toolbar
             android:background="@color/colorPrimaryDark"
@@ -24,15 +24,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create An Event"
+            android:textAllCaps="true"
+            android:textStyle="bold"
             android:id="@+id/createEventPageTitle"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/TextColour"
             android:layout_gravity="center_horizontal" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title: "
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="true"
+            android:textColor="@color/TextColour"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
             />
@@ -50,7 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Type"
-            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="true"
+            android:textColor="@color/TextColour"
             android:layout_marginLeft="24dp"
             />
         <RelativeLayout
@@ -70,9 +73,10 @@
                 android:layout_height="wrap_content"
                 android:text="Air"
                 android:textAllCaps="false"
+                android:layout_toRightOf="@+id/check_trash"
                 android:id="@+id/check_air"
-                android:layout_toRightOf="@id/check_trash"
-                android:layout_marginLeft="48dp"
+
+                android:layout_marginLeft="24dp"
                 />
             <CheckBox
                 android:layout_width="wrap_content"
@@ -80,7 +84,7 @@
                 android:text="Water"
                 android:textAllCaps="false"
                 android:id="@+id/check_water"
-                android:layout_below="@id/check_trash"
+                android:layout_toRightOf="@+id/check_air"
                 android:layout_marginLeft="24dp"
                 />
             <CheckBox
@@ -89,9 +93,8 @@
                 android:text="Soil"
                 android:textAllCaps="false"
                 android:id="@+id/check_soil"
-                android:layout_below="@id/check_air"
-                android:layout_toRightOf="@id/check_water"
-                android:layout_marginLeft="48dp"
+                android:layout_below="@id/check_trash"
+                android:layout_marginLeft="24dp"
                 />
             <CheckBox
                 android:layout_width="wrap_content"
@@ -99,26 +102,27 @@
                 android:text="Plant"
                 android:textAllCaps="false"
                 android:id="@+id/check_plant"
-                android:layout_below="@id/check_water"
-                android:layout_marginLeft="24dp"
+                android:layout_toRightOf="@+id/check_soil"
+                android:layout_below="@id/check_air"
+                android:layout_marginLeft="35dp"
                 />
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Other"
                 android:textAllCaps="false"
+                android:layout_toRightOf="@+id/check_plant"
                 android:id="@+id/check_other"
-                android:layout_below="@id/check_soil"
-                android:layout_toRightOf="@id/check_plant"
-                android:layout_marginLeft="48dp"
+                android:layout_below="@id/check_water"
+                android:layout_marginLeft="10dp"
                 />
         </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description: "
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="true"
+            android:textColor="@color/TextColour"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
             />
@@ -135,33 +139,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enter Date:"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="24dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/TextColour"
             />
         <Button
             android:id="@+id/set_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
             android:layout_marginLeft="24dp"
             android:text="Set Date"
             android:textAllCaps="false"
-           />
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/selected_date"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/TextColour"
             android:layout_marginLeft="24dp"/>
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
+            android:background="@color/colorAccent"
             android:text="Create"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="80dp"
             android:id="@+id/create_event"
             android:textAllCaps="false"
             />

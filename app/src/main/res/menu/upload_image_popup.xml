@@ -4,6 +4,7 @@
     <item
         android:id="@+id/upload_from_gallery"
         android:checked="false"
+        android:icon="@drawable/logout"
         android:title="Gallery"/>
     <item
         android:id="@+id/upload_from_camera"

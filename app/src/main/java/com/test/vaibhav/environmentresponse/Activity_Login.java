@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class Activity_Login extends FirebaseLoginBaseActivity {
 
-    Firebase firebaseRef;
+    static Firebase firebaseRef;
     EditText userNameET;
     EditText passwordET;
     String mName;
@@ -33,6 +33,7 @@ public class Activity_Login extends FirebaseLoginBaseActivity {
     private static final String FIREBASE_ERROR = "Firebase Error";
     private static final String USER_ERROR = "User Error";
     private static final String LOGIN_SUCCESS = "Login Success";
+    private static final String LOGOUT_SUCCESS = "Logout Success";
     private static final String USER_CREATION_SUCCESS =  "Successfully created user";
     private static final String USER_CREATION_ERROR =  "User creation error";
     private static final String EMAIL_INVALID =  "email is invalid :";
@@ -55,13 +56,13 @@ public class Activity_Login extends FirebaseLoginBaseActivity {
                 Activity_Login.this.showFirebaseLoginPrompt();
             }
         });
-        Button createButton = (Button) findViewById(R.id.button);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createUser();
-            }
-        });
+        //Button createButton = (Button) findViewById(R.id.button);
+        //createButton.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+        //    public void onClick(View v) {
+        //        createUser();
+        //    }
+        //});
     }
 
     @Override
@@ -112,14 +113,17 @@ public class Activity_Login extends FirebaseLoginBaseActivity {
 
     @Override
     public void onFirebaseLoggedOut() {
-        Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), LOGOUT_SUCCESS, Toast.LENGTH_SHORT).show();
+        //firebaseRef.unauth();
+        //finish();
+        //System.exit(0);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // All providers are optional! Remove any you don't want.
-        setEnabledAuthProvider(AuthProviderType.PASSWORD);
+        //setEnabledAuthProvider(AuthProviderType.PASSWORD);
         setEnabledAuthProvider(AuthProviderType.GOOGLE);
         //FacebookSdk.sdkInitialize(this);
         //setEnabledAuthProvider(AuthProviderType.FACEBOOK);

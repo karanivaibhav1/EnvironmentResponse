@@ -21,4 +21,11 @@
         android:title="View All Events"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/action_rate_this_app"
+        android:orderInCategory="100"
+        android:title="Rate This App"
+        app:showAsAction="never"
+        />
+
 </menu>

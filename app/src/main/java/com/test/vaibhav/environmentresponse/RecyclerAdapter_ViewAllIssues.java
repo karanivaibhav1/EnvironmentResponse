@@ -20,10 +20,10 @@ import com.firebase.ui.FirebaseRecyclerAdapter;
 
 public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_ReportedIssues,RecyclerAdapter_ViewAllIssues.AllEventsViewHolder> {
 
-
     private Context mContext;
     private static final Firebase ref= new Firebase("https://environmentresponse.firebaseio.com/Issues");
     private User_ReportedIssues issues;
+    OnItemClickListener mItemClickListener;
 
     public RecyclerAdapter_ViewAllIssues(Class<User_ReportedIssues> modelClass, int modelLayout,
                                          Class<AllEventsViewHolder> holder, Query ref, Context context){
@@ -39,6 +39,7 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
         aeViewHolder.vDesc.setText(issues.getDescription());
         aeViewHolder.vTitle.setText(issues.getTitle());
         aeViewHolder.vImage.setImageBitmap(stringToBitMap(issues.getImage()));
+        aeViewHolder.vImage.setTransitionName(issues.getTitle());
         animate(aeViewHolder);
     }
 
@@ -51,10 +52,22 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
             vDesc=(TextView) v.findViewById(R.id.event_desc_recycler);
             vTitle=(TextView) v.findViewById(R.id.event_title_recycler);
             vImage= (ImageView) v.findViewById(R.id.event_image_recycler);
+            vImage.setTransitionName(issues.getTitle());
+            v.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if (mItemClickListener!=null){
+                        //v.setTransitionName(issues.getTitle());
+                        mItemClickListener.onItemClick(v, issues);
+                    }
+                }
+            });
         }
-        public void bindEventData(String type){
-            vDesc.setText(type);
-
+        public void bindEventData(User_ReportedIssues issues){
+            vDesc.setText(issues.getDescription());
+            vTitle.setText(issues.getTitle());
+            vImage.setImageBitmap(stringToBitMap(issues.getImage()));
+            vImage.setTransitionName(issues.getTitle());
         }
     }
     public Bitmap stringToBitMap(String encodedString){
@@ -67,6 +80,11 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
             return null;
         }
     }
+    //@Override
+    //public void onBindViewHolder(AllEventsViewHolder vh, int i)
+    //{
+    //    vh.bindEventData(issues);
+    //}
     @Override
     public RecyclerAdapter_ViewAllIssues.AllEventsViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
 
@@ -90,4 +108,11 @@ public class RecyclerAdapter_ViewAllIssues extends FirebaseRecyclerAdapter<User_
         animate(aeViewHolder);
 
     }*/
+    public interface OnItemClickListener{
+        public void onItemClick(View view, User_ReportedIssues issue);
+    }
+    public void SetOnItemClickListener(final OnItemClickListener mItemClickListener)
+    {
+        this.mItemClickListener = mItemClickListener;
+    }
 }

@@ -540,6 +540,13 @@ public class MapsActivity extends AppCompatActivity
                         .addToBackStack(null)
                         .commit();
                 break;
+            case R.id.logout:
+                ref.unauth();
+                Activity_Login.firebaseRef.unauth();
+                finish();
+                intent = new Intent(this,MapsActivity_WithOutLogin.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

@@ -1,5 +1,6 @@
 package com.test.vaibhav.environmentresponse;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "Location_Lat"
 })
 
-public class User_ReportedIssues {
+public class User_ReportedIssues implements Serializable{
         @JsonProperty("Title")
         private String Title;
         @JsonProperty("Date")

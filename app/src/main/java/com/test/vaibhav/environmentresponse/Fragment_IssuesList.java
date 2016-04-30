@@ -25,6 +25,8 @@ public class Fragment_IssuesList extends Fragment {
     private RecyclerAdapter_ViewAllIssues mRecyclerViewAdapter;
     final Firebase ref = new Firebase("https://environmentresponse.firebaseio.com/Issues");
     private Query qref;
+
+
     public static Fragment_IssuesList newInstance(String type){
         Fragment_IssuesList fragment = new Fragment_IssuesList();
         Bundle args = new Bundle();
@@ -57,10 +59,26 @@ public class Fragment_IssuesList extends Fragment {
 
         qref = ref.orderByChild(type).equalTo(1);
         //qref = qref.orderByChild(type).equalTo(0);
-
+        final OnItemClickedListener mListener;
+        try
+        {
+            mListener=(OnItemClickedListener)getContext();
+        }
+        catch(ClassCastException e)
+        {
+            throw new ClassCastException("This is an exception");
+        }
         mRecyclerViewAdapter = new RecyclerAdapter_ViewAllIssues(User_ReportedIssues.class,R.layout.frament_view_all_issues_recycleradapter,RecyclerAdapter_ViewAllIssues.AllEventsViewHolder.class,qref,getActivity());
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         setHasOptionsMenu(true);
+
+        mRecyclerViewAdapter.SetOnItemClickListener(new RecyclerAdapter_ViewAllIssues.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, User_ReportedIssues issue) {
+                mListener.onItemClickedListener(issue, view);
+            }
+
+        });
         return rootView;
     }
     @Override
@@ -96,4 +114,9 @@ public class Fragment_IssuesList extends Fragment {
 
         super.onCreateOptionsMenu(menu, menuInflater);
     }
+    public interface OnItemClickedListener
+    {
+        public void onItemClickedListener(User_ReportedIssues issue, View view);
+    }
 }
+

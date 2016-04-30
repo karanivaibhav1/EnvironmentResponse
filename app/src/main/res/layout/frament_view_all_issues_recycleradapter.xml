@@ -5,41 +5,62 @@
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#AFFDEE"
     android:layout_height="match_parent"
     card_view:cardCornerRadius = "5dp"
     android:layout_margin="5dp"
     >
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-    <!--  android:background="@drawable/list_selector1"> -->
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linear">
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <!--  android:background="@drawable/list_selector1"> -->
 
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:id="@+id/event_image_recycler"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:scaleType="fitXY"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linear">
 
-            <TextView
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:id="@+id/event_image_recycler"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:scaleType="fitXY"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_desc_recycler"
-                android:layout_marginLeft="5dp"
-                android:textSize="10dp"
-                />
+                android:orientation="vertical"
+                android:id="@+id/innervertical">
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/event_title_recycler"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/TextColour"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/event_desc_recycler"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorSecondaryText"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </android.support.v7.widget.CardView>

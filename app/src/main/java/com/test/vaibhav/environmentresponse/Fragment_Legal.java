@@ -2,6 +2,7 @@ package com.test.vaibhav.environmentresponse;
 
 import  android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class Fragment_Legal extends Fragment {
             mListener=(OnTextClickedListener) getContext();
         }
         catch(ClassCastException e) {
+//            Log.d("error","error");
             throw new ClassCastException("This is an exception");
         }
 

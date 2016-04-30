@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/fragment_aboutpage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This application is designed to take care of the various environmental issues all over the world. People across the world can download this application and can report environmental issues in their areas. These issues can be taken care of by creating events. Various environmental issues like water, air, soil, plants, trash and others can be reported. Users with this application in their mobile will get a notification whenever an issue is reported and event is created. These issues will be sorted depending on their type. In the beginning of the application, the users who haven't logged in will be able to see all the existing issues on the map. These issues are sorted by using various different markers. Once the user logs in he/she will be able to report an issue as well as create an event. As soon as new issue is created a marker will be set in the map. People who live in the nearby area of the issue can attend the event to resolve the issue."
+        android:layout_marginTop="36dp"
+
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        />
+</LinearLayout>
